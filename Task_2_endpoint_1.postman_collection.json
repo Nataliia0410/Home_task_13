@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "8e36933e-5c54-44aa-86d7-53e091e46514",
+		"name": "Task_2_endpoint_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "object_info_1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//передаем значения в окружение\r",
+							"pm.environment.set(\"age\",String(28));\r",
+							"pm.environment.set(\"weight\",String(57));\r",
+							"pm.environment.set(\"name\",\"Natalii\");\r",
+							"\r",
+							"//проверяем статус код\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//проверяем json\r",
+							"var schema ={\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"age\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"daily_food\": {\r",
+							"      \"type\": \"number\"\r",
+							"    },\r",
+							"    \"daily_sleep\": {\r",
+							"      \"type\": \"number\"\r",
+							"    },\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"age\",\r",
+							"    \"daily_food\",\r",
+							"    \"daily_sleep\",\r",
+							"    \"name\"\r",
+							"  ]\r",
+							"}\r",
+							"    pm.test('Json is valid', function () {\r",
+							"    pm.expect(tv4.validate(JSON.parse(responseBody), schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"// проверяем правильность результата перемножения на коэффициент.\r",
+							"pm.test(\"Verify coefficient\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let weight = 57\r",
+							"    pm.expect(weight).to.eql(parseInt(jsonData.daily_food/0.012))\r",
+							"    pm.expect(weight).to.eql(parseInt(jsonData.daily_sleep/2.5))\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/object_info_1?age=29&weight=57&name=Natalii",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"object_info_1"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "29"
+						},
+						{
+							"key": "weight",
+							"value": "57"
+						},
+						{
+							"key": "name",
+							"value": "Natalii"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
