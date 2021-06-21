@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "2e4255ca-3af2-4631-8558-1e9d1029320a",
+		"name": "Task_2_endpoint_5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user_info_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//проверка статуса\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var name = JSON.parse(responseBody)\r",
+							"    pm.response.to.have.body(name,String);\r",
+							"});\r",
+							"\r",
+							"//проверка json\r",
+							"var schema ={\r",
+							"\"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"age\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"daily_food\": {\r",
+							"      \"type\": \"number\"\r",
+							"    },\r",
+							"    \"daily_sleep\": {\r",
+							"      \"type\": \"number\"\r",
+							"    },\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"age\",\r",
+							"    \"daily_food\",\r",
+							"    \"daily_sleep\",\r",
+							"    \"name\"\r",
+							"  ]\r",
+							"}\r",
+							"pm.test('Json is valid', function () {\r",
+							"    var carrier = JSON.parse(responseBody);\r",
+							"    pm.expect(tv4.validate(carrier, schema)).to.be.true;\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Verify coefficient\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let weight = 57;\r",
+							"    pm.expect(weight).to.eql(parseInt(jsonData.daily_food/0.012))\r",
+							"    pm.expect(weight).to.eql(parseInt(jsonData.daily_sleep/2.5))\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "{{weight}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info_1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info_1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
